@@ -1,2 +1,2 @@
-# muscle_model
-An implementation of the Hill Type Muscle Model
+# Hill Type Muscle Model
+A Python implementation of the Hill Type Muscle Model
