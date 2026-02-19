@@ -80,12 +80,8 @@ class Muscle:
         """
         fig, ax = plt.subplots(1, 3, figsize=(16, 5))
         fig.suptitle(f"Muscle Characteristics: {self.name} (F_max={self.F_max_iso}N)")
-
-        # 1. Force-Length (CE & PE)
-        # Sweep fiber length from 50% to 180% of optimal length
         l_scan = np.linspace(0.5 * self.l_opt, 1.8 * self.l_opt, 100)
         
-        # Calculate forces using YOUR methods
         fl_ce = [self.force_length_relationship_CE(l) * self.F_max_iso for l in l_scan]
         fl_pe = [self.force_length_relationship_PE(l) * self.F_max_iso for l in l_scan]
         fl_total = np.array(fl_ce) + np.array(fl_pe)
@@ -100,8 +96,6 @@ class Muscle:
         ax[0].legend()
         ax[0].grid(True)
 
-        # 2. Force-Length (Tendon / SEE)
-        # Sweep tendon length slightly above slack length
         l_see_scan = np.linspace(self.l_slack, 1.08 * self.l_slack, 100)
         fl_see = [self.force_length_relationship_SEE(l) * self.F_max_iso for l in l_see_scan]
 
@@ -111,9 +105,6 @@ class Muscle:
         ax[1].set_xlabel("Tendon Length (m)")
         ax[1].grid(True)
 
-        # 3. Force-Velocity
-        # Sweep velocity from Shortening (-v_max) to Lengthening (+0.5*v_max)
-        # Note: Your math implies negative v_ce is shortening (f_v < 1)
         v_scan = np.linspace(-self.v_max, 0.5 * self.v_max, 100)
         fv_curve = [self.force_velocity_relationship_CE(v) * self.F_max_iso for v in v_scan]
 
@@ -153,9 +144,6 @@ class MuscleModel:
 
         l_ce_0 = l_m_path[0] - self.muscle.l_slack
         l_ce = l_ce_0
-
-        #check intiailization
-        # print(f"Initial l_ce: {l_ce:.4f} m")
 
         #initialize history lists
         f_m_history = []
